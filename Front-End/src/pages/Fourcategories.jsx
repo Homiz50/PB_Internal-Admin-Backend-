@@ -64,14 +64,6 @@ export default function SidebarWithCategories() {
       ease: "power2.out"
     });
 
-    // Animate icon
-    const iconElement = cardsRef.current[index].querySelector(".icon-element");
-    gsap.to(iconElement, {
-      rotate: 10,
-      scale: 1.2,
-      duration: 0.4,
-      ease: "back.out(1.7)"
-    });
   };
 
   const handleMouseLeave = (index) => {
