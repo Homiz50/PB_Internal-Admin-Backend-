@@ -88,6 +88,24 @@ routes.put('/property/:id', async (req, res) => {
 });
 
 
+routes.get('/companydata/:company', async (req, res) => {
+    try {
+        const { company } = req.params;  // Now reading from URL params
 
+        const propertyData = await Property.find({ company })
+            .sort({ 'data.owner_name': 1 })
+            .collation({ locale: "en", strength: 2 });
+
+        res.status(200).json(propertyData);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }   
+});
+
+// Delete properties by date (more specific route first)
+routes.delete('/property/delete-by-date', propartyController.deletePropertiesByDate);
+
+// Delete property by ID (more general route second)
+routes.delete('/property/:id', propartyController.deletePropertiesByIds);
 
 module.exports = routes;

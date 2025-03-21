@@ -2,6 +2,7 @@ const adminModel =require('../models/admin.model')
 const adminServices = require('../services/admin.service')
 const { validationResult } = require('express-validator')
 const blackListToken = require('../models/blackListToken.model');
+const jwt = require('jsonwebtoken');
 
 module.exports.registerAdmin = async (req, res, next) => {
     const error = validationResult(req);
@@ -51,12 +52,21 @@ module.exports.loginAdmin = async (req, res, next) => {
 
     if (!isMatch) return res.status(401).json({ message: 'number and Password Are Not Match' });
 
-    const token = await admin.generateAuthToken();
+    // Generate token with 24-hour expiration
+    const token = jwt.sign(
+        { _id: admin._id },
+        process.env.JWT_SECRET,
+        { expiresIn: '24h' } // Token expires in 24 hours
+    );
 
-    res.cookie('token', token)
+    // Set cookie with 24-hour expiration
+    res.cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 24 * 60 * 60 * 1000 // 24 hours in milliseconds
+    });
 
     res.json({ token, admin });
-
 }
 
 module.exports.getAdminProfile = async (req, res, next) => {

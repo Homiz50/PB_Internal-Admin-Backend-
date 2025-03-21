@@ -10,22 +10,6 @@ const PropertyRoutes = require('./routes/Property.route')
 const port =  3000; // Updated to use environment variable
 const reader = require('xlsx')
 
-// Reading our test file
-// const file = reader.readFile('./demo.xlsx')
-// let data = []
-// const sheets = file.SheetNames
-
-// for(let i = 0; i < sheets.length; i++)
-// { 
-//    const temp = reader.utils.sheet_to_json(
-//         file.Sheets[file.SheetNames[i]])
-//    temp.forEach((res) => {
-//       data.push(res)
-//    })
-// }
-// // Printing data
-// console.log(data)
-
 conectToDb()
 app.use(cors())
 app.use(express.json())
