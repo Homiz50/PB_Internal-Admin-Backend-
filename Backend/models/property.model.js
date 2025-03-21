@@ -73,6 +73,10 @@ const propertySchema = new mongoose.Schema({
         call_Status:{
             type:String,
             default:"-"
+        },
+        extea:{
+            type:String,
+            default:""
         }
     }
 }, {

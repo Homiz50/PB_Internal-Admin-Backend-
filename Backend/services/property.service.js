@@ -33,7 +33,8 @@ module.exports.processExcelFile = async (filePath, company, categories) => {
                 type: row.type || "-",
                 sub_type: row.sub_type || "-",
                 status: row.status || "-",
-                call_Status: row.call_Status || "-"
+                call_Status: row.call_Status || "-",
+                extea:row.extea ||"-"
             }
         };
 
