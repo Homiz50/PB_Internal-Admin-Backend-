@@ -47,7 +47,7 @@ routes.get('/companydata/:company/:categories', async (req, res) => {
 routes.put('/property/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { data } = req.body;
+        const { data,categories } = req.body;
         
         // Find the property by ID
         const property = await Property.findById(id);
@@ -56,6 +56,9 @@ routes.put('/property/:id', async (req, res) => {
             return res.status(404).json({ error: 'Property not found' });
         }
 
+        if (categories) {
+            property.categories = categories; // Update categories directly
+        }
         // Update all fields from the data object
         property.data = {
             ...property.data,  // Keep existing data
@@ -87,20 +90,19 @@ routes.put('/property/:id', async (req, res) => {
     }
 });
 
-
 routes.get('/companydata/:company', async (req, res) => {
     try {
         const { company } = req.params;  // Now reading from URL params
-
+        console.log(company)
         const propertyData = await Property.find({ company })
             .sort({ 'data.owner_name': 1 })
             .collation({ locale: "en", strength: 2 });
-
         res.status(200).json(propertyData);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }   
 });
+
 
 // Delete properties by date (more specific route first)
 routes.delete('/property/delete-by-date', propartyController.deletePropertiesByDate);
