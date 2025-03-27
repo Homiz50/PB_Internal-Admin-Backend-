@@ -33,6 +33,7 @@ routes.get('/logout', authMiddlewer.authAdmin, async (req, res) => {
         res.status(500).json({ message: 'Error during logout' });
     }
 });
+routes.get('/new', (req,res)=>{console.log("mew")});
 
 routes.get('/profile', authMiddlewer.authAdmin, adminController.getAdminProfile);
 
