@@ -2,6 +2,7 @@ const propertyModel = require('../models/property.model')
 const { validationResult } = require('express-validator')
 const propertyService = require('../services/property.service')
 const mongoose = require('mongoose')
+const DeletedProperty = require('../models/deletedProperty.model')
 
 module.exports.propartyadd = async (req, res, next) => {
     try {
@@ -58,6 +59,14 @@ module.exports.deletePropertiesByIds = async (req, res, next) => {
         if (idArray.length === 0) {
             return res.status(400).json({ message: 'Valid Ids are required' });
         }
+
+        // Find properties to delete
+        const propertiesToDelete = await propertyModel.find({ _id: { $in: idArray } });
+        
+        // Save deleted properties to DeletedProperty model
+        await DeletedProperty.insertMany(propertiesToDelete);
+
+        // Delete properties
         const results = await propertyModel.deleteMany({ _id: { $in: idArray } });
         console.log("Delete results:", results);
         if (results.deletedCount === 0) {
@@ -88,6 +97,17 @@ module.exports.deletePropertiesByDate = async (req, res, next) => {
         endDate.setUTCDate(endDate.getUTCDate() + 1);
 
         console.log('Searching for properties between:', startDate, 'and', endDate);
+
+        // Find properties to delete
+        const propertiesToDelete = await propertyModel.find({
+            createdAt: {
+                $gte: startDate,
+                $lt: endDate
+            }
+        });
+
+        // Save deleted properties to DeletedProperty model
+        await DeletedProperty.insertMany(propertiesToDelete);
 
         const results = await propertyModel.deleteMany({
             createdAt: {

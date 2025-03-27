@@ -110,4 +110,19 @@ routes.delete('/property/delete-by-date', propartyController.deletePropertiesByD
 // Delete property by ID (more general route second)
 routes.delete('/property/:id', propartyController.deletePropertiesByIds);
 
+routes.get('/deletedproperties', async (req, res) => {
+    try {
+        const deletedProperties = await require('../models/deletedProperty.model').find().populate('company').exec();
+        if (!deletedProperties) {
+            res.status(404).json({ message: 'No deleted properties found' });
+        } else {
+            res.status(200).json(deletedProperties);
+        }
+    } catch (error) {
+        console.error('Error fetching deleted properties:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
 module.exports = routes;
