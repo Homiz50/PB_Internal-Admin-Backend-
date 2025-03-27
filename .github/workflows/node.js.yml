@@ -30,4 +30,4 @@ jobs:
 
     - name: Deploy and Restart with PM2
       run: |
-        pm2 restart server || pm2 start npm --name "server" -- run start
+        pm2 restart server1 || pm2 start npm --name "server1" -- run dev
