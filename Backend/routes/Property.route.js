@@ -31,9 +31,29 @@ routes.post('/upload-property/:company/:categories', upload.single('file'), asyn
 
 routes.get('/companydata/:company/:categories', async (req, res) => {
     try {
-        const { company, categories } = req.params;  // Now reading from URL params
+        const { company, categories } = req.params;
 
-        const propertyData = await Property.find({ company, categories })
+        let query = { company };
+
+        // Handle special case for Residential properties that should appear in both categories
+        if (categories === 'Residential Sell' || categories === 'Residential Rent') {
+            // Check if the property has both Residential Sell/Rent in categories
+            query.$or = [
+                { categories: categories },
+                { categories: 'Residential Sell/Rent' }  // New combined category
+            ];
+        }   else if (categories === 'Commercial Sell' || categories === 'Commercial Rent') {
+            query.$or = [
+                { categories: categories },
+                { categories: 'Commercial Sell/Rent' }
+            ];
+        }  
+        else {
+            // For other categories, use exact match
+            query.categories = categories;
+        }
+
+        const propertyData = await Property.find(query)
             .sort({ 'data.owner_name': 1 })
             .collation({ locale: "en", strength: 2 });
 
