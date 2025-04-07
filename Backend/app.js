@@ -7,6 +7,7 @@ const cookieparser = require('cookie-parser')
 const app = express();
 const userRoutes = require('./routes/admin.route')
 const PropertyRoutes = require('./routes/Property.route')
+const properties = require('./routes/userlisting.route')
 const port =  3000; // Updated to use environment variable
 const reader = require('xlsx')
 
@@ -22,5 +23,5 @@ app.get('/', (req, res) => {
 
 app.use('/admin',userRoutes);
 app.use('/data',PropertyRoutes);
-
+app.use('/user',properties)
 module.exports = app
