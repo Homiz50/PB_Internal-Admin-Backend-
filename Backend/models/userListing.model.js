@@ -14,7 +14,8 @@ const propertySchema = new mongoose.Schema({
     propertyTypes: String,
     categories: String,
     company: String,
-    propertyType: String // Add this field
+    propertyType: String, // Add this field
+    ownarName: String 
 });
 
 // Check if the model already exists before creating it
