@@ -13,10 +13,20 @@ router.post('/api/properties', upload.array('images', 10), userlisting);
 // GET route to fetch all user listings
 router.get('/api/properties', async (req, res) => {
     try {
-        const properties = await Property.find(); // Fetch all properties
-        res.status(200).json(properties); // Send the properties as a JSON response
+        const properties = await Property.find().select('-images'); // Exclude images from the response
+        res.status(200).json(properties);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching properties', error: error.message });
+    }
+});
+
+// GET route to fetch properties by lister
+router.get('/api/properties/lister/:lister', async (req, res) => {
+    try {
+        const properties = await Property.find({ lister: req.params.lister }).select('-images');
+        res.status(200).json(properties);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching properties by lister', error: error.message });
     }
 });
 

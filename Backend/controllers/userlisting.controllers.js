@@ -5,7 +5,7 @@ module.exports.userlisting = async (req, res) => {
     try {
         const propertyData = {
             ...req.body,
-            images: []
+            images: [],
         };
 
         // Handle media uploads if files are present

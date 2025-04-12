@@ -16,6 +16,7 @@ const propertySchema = new mongoose.Schema({
     company: String,
     propertyType: String,
     ownarName: String,
+    lister: String,
     images: [{
         data: Buffer,
         contentType: String,
