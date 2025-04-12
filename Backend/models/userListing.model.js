@@ -14,8 +14,17 @@ const propertySchema = new mongoose.Schema({
     propertyTypes: String,
     categories: String,
     company: String,
-    propertyType: String, // Add this field
-    ownarName: String 
+    propertyType: String,
+    ownarName: String,
+    images: [{
+        data: Buffer,
+        contentType: String,
+        type: { type: String, enum: ['image', 'video'] }
+    }],
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 // Check if the model already exists before creating it
