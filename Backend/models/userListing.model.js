@@ -16,7 +16,10 @@ const propertySchema = new mongoose.Schema({
     company: String,
     propertyType: String,
     ownarName: String,
-    lister: String,
+    lister: {
+        type: String,
+        default: 'Anonymous'
+    },
     images: [{
         data: Buffer,
         contentType: String,

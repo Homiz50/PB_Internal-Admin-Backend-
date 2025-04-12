@@ -3,9 +3,11 @@ const { createProperty } = require('../services/userListing.service');
 
 module.exports.userlisting = async (req, res) => {
     try {
+        console.log('Received body:', req.body); // Debug log
+        
         const propertyData = {
             ...req.body,
-            images: [],
+            images: []
         };
 
         // Handle media uploads if files are present
@@ -17,9 +19,11 @@ module.exports.userlisting = async (req, res) => {
             }));
         }
 
+        console.log('Property data to be saved:', propertyData); // Debug log
         const property = await createProperty(propertyData);
         res.status(201).json(property);
     } catch (error) {
+        console.error('Error in userlisting controller:', error); // Debug log
         res.status(400).json({ error: error.message });
     }
 };
