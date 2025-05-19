@@ -14,8 +14,8 @@ const reader = require('xlsx')
 conectToDb()
 app.use(cors({
   origin: '*', // Or: ['http://localhost:3000'] for a specific frontend
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
+  // methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  // credentials: true
 }))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
