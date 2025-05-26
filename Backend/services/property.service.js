@@ -34,6 +34,7 @@ module.exports.processExcelFile = async (filePath, company, categories) => {
                 sub_type: row.sub_type || "-",
                 status: row.status || "-",
                 call_Status: row.call_Status || "-",
+                emp_Id:row.emp_Id ||"",
                 extea:row.extea ||"-"
             }
         };

@@ -56,23 +56,27 @@ const propertySchema = new mongoose.Schema({
         },
         furniture: {
             type: String,
-            default:"-",
+            default:"",
         },
         type: {
             type: String,
-            default:"-",
+            default:"",
         },
         sub_type: {
             type: String,
-            default:"-",   
+            default:"",   
         },
         status: {
             type: String,
-            default: "-"
+            default: ""
         },
         call_Status:{
             type:String,
-            default:"-"
+            default:""
+        },
+        emp_Id:{
+            type:String,
+            default:""
         },
         extea:{
             type:String,

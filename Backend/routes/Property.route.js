@@ -97,6 +97,7 @@ routes.put('/property/:id', async (req, res) => {
             number: data.number || property.data.number,
             furniture: data.furniture || property.data.furniture,
             status: data.status || property.data.status,
+            emp_Id: data.emp_Id || property.data.emp_Id,
             remark: data.remark || property.data.remark
         };
         

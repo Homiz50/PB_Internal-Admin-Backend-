@@ -5,25 +5,25 @@ const mongoose = require('mongoose')
 const DeletedProperty = require('../models/deletedProperty.model')
 
 module.exports.propartyadd = async (req, res, next) => {
-    try {
-        const error = validationResult(req);
+    // try {
+    //     const error = validationResult(req);
 
-        if (!error.isEmpty()) {
-            console.log("this is Controoler")
-            return res.status(400).json({ errors: error.array() })
-        }
+    //     if (!error.isEmpty()) {
+    //         console.log("this is Controoler")
+    //         return res.status(400).json({ errors: error.array() })
+    //     }
 
-        const { data, company, categories } = req.body;
+    //     const { data, company, categories } = req.body;
 
-        if (!company && !categories) {
-            return res.status(400).json({ error: 'Property data is required' });
-        }
-        // const propertyList = await propertyService.createproperty(categories, company, data);
+    //     if (!company && !categories) {
+    //         return res.status(400).json({ error: 'Property data is required' });
+    //     }
+    //     // const propertyList = await propertyService.createproperty(categories, company, data);
         
-        // res.status(201).json(propertyList);
-    } catch (error) {
-        next(error);
-    }
+    //     // res.status(201).json(propertyList);
+    // } catch (error) {
+    //     next(error);
+    // }
 
     // add file 
     try {
