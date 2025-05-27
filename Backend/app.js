@@ -12,11 +12,19 @@ const port =  3000; // Updated to use environment variable
 const reader = require('xlsx')
 
 conectToDb()
+const allowedOrigins = ['http://13.204.43.32', 'https://probroker.in'];
+
 app.use(cors({
-  origin: '*', // Or: ['http://localhost:3000'] for a specific frontend
-  // methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  // credentials: true
-}))
+  origin: function(origin, callback){
+    if(!origin) return callback(null, true); // allow non-browser requests
+    if(allowedOrigins.indexOf(origin) === -1){
+      return callback(new Error('CORS policy violation'), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true, // if you need cookies/auth
+}));
+
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(cookieparser())
