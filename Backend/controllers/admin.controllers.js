@@ -74,12 +74,28 @@ module.exports.getAdminProfile = async (req, res, next) => {
     res.status(200).json(req.admin);
 }
 
-module.exports.logoutAdmin = async (req, res, next) => {
-    res.clearCookie('token'); // Clear the token 
-
-    const token = req.cookies.token || req.headers.authorization.split(' ')[1];
-    console.log(token)
-    await blackListToken.create({ token })
-
-    res.status(200).json({ message: 'Logged out successfully' }); // Respond with a success message
-}
+module.exports.logout = async (req, res) => {
+    try {
+        const token = req.cookies.token || req.headers.authorization.split(' ')[1];
+        
+        // Add token to blacklist
+        await blackListToken.create({ token });
+        
+        // Clear cookie
+        res.clearCookie('token');
+        
+        res.status(200).json({ 
+            success: true,
+            message: 'Logged out successfully',
+            data: {
+                clearLocalStorage: true // This flag will tell frontend to clear localStorage
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ 
+            success: false,
+            message: 'Error during logout',
+            error: error.message 
+        });
+    }
+};
