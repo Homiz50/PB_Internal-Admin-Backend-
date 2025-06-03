@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { createProperty } = require('../services/userListing.service');
+const Property = require('../models/userListing.model');
 
 module.exports.userlisting = async (req, res) => {
     try {
@@ -27,3 +28,12 @@ module.exports.userlisting = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 };
+
+module.exports.showingUserProperty = async (req, res) => {
+    try {
+        const properties = await Property.find().select('-images'); // Exclude images from the response
+        res.status(200).json(properties);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching properties', error: error.message });
+    }
+}

@@ -15,7 +15,8 @@ conectToDb()
 
 
 app.use(cors({
-  origin: ['https://probroker.in', 'http://13.204.43.32', 'https://13.204.43.32'],
+  origin:'*',
+  // origin: ['https://probroker.in', 'http://13.204.43.32', 'https://13.204.43.32'],
   credentials: false
 }));
 

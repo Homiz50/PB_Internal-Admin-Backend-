@@ -11,7 +11,7 @@ module.exports.registerAdmin = async (req, res, next) => {
         return res.status(400).json({ errors: error.array() })
     }
 
-    const { firstname, lastname, number, password } = req.body;
+    const { firstname, lastname, number,role, password } = req.body;
 
 
     const isAdminAlreadyExist = await adminModel.findOne({ number })
@@ -26,6 +26,7 @@ module.exports.registerAdmin = async (req, res, next) => {
     const admin = await adminServices.createAdmin(
         firstname,
         lastname,
+        role,
         number,
         hashPassword
     )

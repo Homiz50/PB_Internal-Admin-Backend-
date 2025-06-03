@@ -4,6 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const router = express.Router();
 const { userlisting } = require('../controllers/userlisting.controllers');
+const {showingUserProperty} = require('../controllers/userlisting.controllers')
 const Property = require('../models/userListing.model'); // Adjust the path as necessary
 const upload = require('../middleware/upload.middleware');
 
@@ -11,14 +12,7 @@ const upload = require('../middleware/upload.middleware');
 router.post('/api/properties', upload.array('images', 10), userlisting);
 
 // GET route to fetch all user listings
-router.get('/api/properties', async (req, res) => {
-    try {
-        const properties = await Property.find().select('-images'); // Exclude images from the response
-        res.status(200).json(properties);
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching properties', error: error.message });
-    }
-});
+router.get('/api/properties',showingUserProperty);
 
 // GET route to fetch properties by lister
 router.get('/api/properties/lister/:lister', async (req, res) => {

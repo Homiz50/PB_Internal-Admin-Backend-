@@ -14,6 +14,9 @@ const AdminSchema = new mongoose.Schema({
         type: String,
         minlength: [3, 'Last Name Min Length is 3']
     },
+    role: {
+        type: String,
+        },
 
     number: {
         type: String,
