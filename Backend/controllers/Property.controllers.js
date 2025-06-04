@@ -23,6 +23,40 @@ module.exports.propartyadd = async (req, res, next) => {
     }
 }
 
+module.exports.propertget = async (req ,res, next) =>{
+    try {
+        const { company, type } = req.params;
+
+        let query = { company };
+
+        // Handle special case for Residential properties that should appear in both categories
+        if (type === 'Residential Sell' || type === 'Residential Rent') {
+            // Check if the property has both Residential Sell/Rent in type
+            query.$or = [
+                { 'data.type': type },
+                { 'data.type': 'Residential Sell/Rent' }  // New combined category
+            ];
+        }   else if (type === 'Commercial Sell' || type === 'Commercial Rent') {
+            query.$or = [
+                { 'data.type': type },
+                { 'data.type': 'Commercial Sell/Rent' }
+            ];
+        }  
+        else {
+            // For other types, use exact match
+            query['data.type'] = type;
+        }
+
+        const propertyData = await propertyModel.find(query)
+            .sort({ 'data.name': 1 })
+            .collation({ locale: "en", strength: 2 });
+
+        res.status(200).json(propertyData);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }   
+}
+
 module.exports.deletePropertiesByIds = async (req, res, next) => {
     try {
         const { id } = req.params;

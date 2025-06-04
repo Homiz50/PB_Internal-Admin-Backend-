@@ -10,78 +10,49 @@ const DeletedPropertySchema = new mongoose.Schema({
         required: true
     },
     data: {
-        date: {
+        type: Object,
+        required: true,
+        properties: {
+            title: String,
+            listedDate: Date,
+            date: String,
             type: String,
-            default: ""
-        },
-        owner_name: {
-            type: String,
-            default: ""
-        },
-        number: {
-            type: String,
-            default: ""
-        },
-        project_name: {
-            type: String,
-            default: ""
-        },
-        squr: {
-            type: String,
-            default: ""
-        },
-        bhk: {
-            type: String,
-            default: ""
-        },
-        price: {
-            type: String,
-            default: ""
-        },
-        remark: {
-            type: String,
-            default: ""
-        },
-        area: {
-            type: String,
-            default: ""
-        },
-        address: {
-            type: String,
-            default: ""
-        },
-        description: {
-            type: String,
-            default: ""
-        },
-        furniture: {
-            type: String,
-            default: "-",
-        },
-        type: {
-            type: String,
-            default: "-",
-        },
-        sub_type: {
-            type: String,
-            default: "-",
-        },
-        status: {
-            type: String,
-            default: "-"
-        },
-        call_Status: {
-            type: String,
-            default: "-"
-        },
-        extea: {
-            type: String,
-            default: ""
+            rent: String,
+            rentValue: Number,
+            bhk: String,
+            furnishedType: String,
+            squareFt: String,
+            sqFt: String,
+            address: String,
+            area: String,
+            city: String,
+            status: String,
+            age: String,
+            tenant: String,
+            facing: String,
+            totalFloors: String,
+            brokerage: String,
+            balconies: String,
+            washroom: String,
+            description: String,
+            userType: String,
+            unitType: String,
+            propertyCurrentStatus: String,
+            description1: String,
+            key: String,
+            name: String,
+            number: String,
+            isDeleted: Number,
+            isSaved: Number,
+            remark: String,
+            createdOn: {
+                type: Date,
+                default: Date.now
+            }
         }
     }
 }, {
     timestamps: true
 });
-
 const DeletedProperty = mongoose.model('DeletedProperty', DeletedPropertySchema);
 module.exports = DeletedProperty; 

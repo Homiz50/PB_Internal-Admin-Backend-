@@ -13,39 +13,7 @@ const upload = multer({ dest: 'uploads/' });
 
 routes.post('/upload-property/:company/:categories', upload.single('file'), propartyController.propartyadd);
 
-routes.get('/companydata/:company/:categories', async (req, res) => {
-    try {
-        const { company, categories } = req.params;
-
-        let query = { company };
-
-        // Handle special case for Residential properties that should appear in both categories
-        if (categories === 'Residential Sell' || categories === 'Residential Rent') {
-            // Check if the property has both Residential Sell/Rent in categories
-            query.$or = [
-                { categories: categories },
-                { categories: 'Residential Sell/Rent' }  // New combined category
-            ];
-        }   else if (categories === 'Commercial Sell' || categories === 'Commercial Rent') {
-            query.$or = [
-                { categories: categories },
-                { categories: 'Commercial Sell/Rent' }
-            ];
-        }  
-        else {
-            // For other categories, use exact match
-            query.categories = categories;
-        }
-
-        const propertyData = await Property.find(query)
-            .sort({ 'data.owner_name': 1 })
-            .collation({ locale: "en", strength: 2 });
-
-        res.status(200).json(propertyData);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }   
-});
+routes.get('/companydata/:company/:type', propartyController.propertget);
 
 
 routes.put('/property/:id', async (req, res) => {
