@@ -18,30 +18,50 @@ module.exports.processExcelFile = async (filePath, company, categories) => {
             company,
             categories,
             data: {
+                title: row.title || "",
+                listedDate: row.date ? new Date(row.date) : new Date(),
                 date: row.date || "",
-                owner_name: row.owner_name || "",
-                project_name: row.project_name || "",
-                number: row.number || "",
-                price: row.price || "",
-                squr: row.squr || "",
-                bhk: row.bhk || "",
-                remark: row.remark || "",
-                area: row.area || "",
-                address: row.address || "",
-                description: row.description || "",
-                furniture: row.furniture || "-",
                 type: row.type || "-",
-                sub_type: row.sub_type || "-",
+                rent: row.rent || "",
+                rentValue: parseFloat(row.rentValue) || 0,
+                bhk: row.bhk || "",
+                furnishedType: row.furnishedType || "-",
+                squareFt: row.squareFt || "",
+                sqFt: row.sqFt || 0,
+                address: row.address || "",
+                area: row.area || "",
+                city: row.city || "",
                 status: row.status || "-",
-                call_Status: row.call_Status || "-",
-                emp_Id:row.emp_Id ||"",
-                extea:row.extea ||"-"
+                age: row.age || "",
+                tenant: row.tenant || "",
+                facing: row.facing || "",
+                totalFloors: row.totalFloors || "",
+                brokerage: row.brokerage || "",
+                balconies: row.balconies || "",
+                washroom: row.washroom || "",
+                description: row.description || "",
+                userType: row.userType || "",
+                unitType: row.sub_type || "-",
+                propertyCurrentStatus: row.call_Status || "-",
+                description1: row.description1 || "",
+                key: row.key || "",
+                name: row.name || "",
+                number: row.number || "",
+                isDeleted: 0,
+                isSaved: 1,
+                remark: row.remark || "",
+                createdOn: new Date()
             }
         };
 
-        // Save each property to the database
-        const property = await propertyModel.create(propertyData);
-        propertyList.push(property);
+        try {
+            // Save each property to the database
+            const property = await propertyModel.create(propertyData);
+            propertyList.push(property);
+        } catch (error) {
+            console.error('Error saving property:', error);
+            throw new Error(`Error saving property: ${error.message}`);
+        }
     }
 
     // Remove the file after processing

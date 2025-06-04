@@ -11,23 +11,7 @@ const propertyService = require('../services/property.service.js');
 // Configure multer for file uploads
 const upload = multer({ dest: 'uploads/' });
 
-routes.post('/upload-property/:company/:categories', upload.single('file'), async (req, res) => {
-    try {
-        const { company, categories } = req.params;
-        const file = req.file;
-
-        if (!file) {
-            return res.status(400).json({ error: 'File is required' });
-        }
-
-        // Call the service to process the file
-        const propertyList = await propertyService.processExcelFile(file.path, company, categories);
-
-        res.status(201).json(propertyList);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
+routes.post('/upload-property/:company/:categories', upload.single('file'), propartyController.propartyadd);
 
 routes.get('/companydata/:company/:categories', async (req, res) => {
     try {
