@@ -14,12 +14,13 @@ module.exports.processExcelFile = async (filePath, company, categories) => {
     // Process each row in the Excel file
     const propertyList = [];
     for (const row of data) {
+        
         const propertyData = {
             company,
             categories,
             data: {
                 title: row.title || "",
-                listedDate: row.date ? new Date(row.date) : new Date(),
+                listedDate: row.listedDate ? new Date(row.listedDate) : new Date(),
                 date: row.date || "",
                 type: row.type || "-",
                 rent: row.rent || "",
@@ -41,7 +42,7 @@ module.exports.processExcelFile = async (filePath, company, categories) => {
                 washroom: row.washroom || "",
                 description: row.description || "",
                 userType: row.userType || "",
-                unitType: row.sub_type || "-",
+                unitType: row.unitType || "-",
                 propertyCurrentStatus: row.call_Status || "-",
                 description1: row.description1 || "",
                 key: row.key || "",
