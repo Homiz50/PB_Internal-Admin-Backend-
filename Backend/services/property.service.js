@@ -43,7 +43,7 @@ module.exports.processExcelFile = async (filePath, company, categories) => {
                 description: row.description || "",
                 userType: row.userType || "",
                 unitType: row.unitType || "-",
-                propertyCurrentStatus: row.call_Status || "-",
+                propertyCurrentStatus: row.propertyCurrentStatus || "-",
                 description1: row.description1 || "",
                 key: row.key || "",
                 name: row.name || "",

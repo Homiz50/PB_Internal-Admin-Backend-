@@ -63,9 +63,9 @@ module.exports.propertget = async (req, res, next) => {
 
 module.exports.getAllProperty = async (req, res, next) => {
   try {
-    const { company } = req.params; // Now reading from URL params
+    const { company } = req.params;
     console.log(company);
-    const propertyData = await Property.find({ company })
+    const propertyData = await propertyModel.find({ company })
       .sort({ "data.owner_name": 1 })
       .collation({ locale: "en", strength: 2 });
     res.status(200).json(propertyData);
