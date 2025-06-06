@@ -74,6 +74,22 @@ module.exports.getAllProperty = async (req, res, next) => {
   }
 };
 
+module.exports.searchquery =  async (req, res) => {
+  try {
+    console.log(req.query)
+    const { query} = req.query;
+    const property = await propertyService.searchpremiseandaddress(query);
+    console.log('Property details:', property);
+    return res.status(200).send(property);
+  } catch (error) {
+    console.error('Error in contactPropertyV2:', error);
+    if (error instanceof TypeError || error instanceof RangeError) {
+      return res.status(400).json(createResponse(false, error.message, {}));
+    }
+    return res.status(500).json(createResponse(false, error.message, {}));
+  }
+},
+
 module.exports.deletePropertiesByIds = async (req, res, next) => {
   try {
     const { id } = req.params;

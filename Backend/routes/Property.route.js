@@ -34,6 +34,8 @@ routes.get("/deletedproperties", propartyController.getDeleteProperty);
 // Get properties by confirmation status
 routes.get("/properties/status/:status", propartyController.getPropertiesByConfirmationStatus);
 
+routes.get("/properties/searchPremiuse", propartyController.searchquery);// Property routes
+
 routes.put("/property/:id", async (req, res) => {
   try {
     const { id } = req.params;

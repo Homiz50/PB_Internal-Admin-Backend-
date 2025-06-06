@@ -25,6 +25,7 @@ const propertySchema = new mongoose.Schema({
             sqFt: String,
             address: String,
             area: String,
+            nearby:String,
             city: String,
             status: String,
             age: String,

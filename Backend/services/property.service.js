@@ -31,6 +31,7 @@ module.exports.processExcelFile = async (filePath, company, categories) => {
                 sqFt: row.sqFt || 0,
                 address: row.address || "",
                 area: row.area || "",
+                nearby:row.nearby || "",
                 city: row.city || "",
                 status: row.status || "-",
                 age: row.age || "",
@@ -70,5 +71,44 @@ module.exports.processExcelFile = async (filePath, company, categories) => {
 
     return propertyList;
 };
+
+
+module.exports.searchpremiseandaddress = async (query)=> {
+    try {
+      if (!query) {
+        throw new Error("Search query is required");
+      }
+
+      // Create case-insensitive regex pattern for the search query
+      const searchPattern = new RegExp(query, 'i');
+
+      // Search across multiple fields
+      const properties = await propertyModel.find(
+        {
+          $or: [
+            { 'data.title': searchPattern },
+            { 'data.area': searchPattern },
+            { 'data.nearby': searchPattern },
+          ],
+          isDeleted: { $ne: 1 }
+        },
+        { 'data.title': 1, 'data.area': 1, 'data.nearby': 1, _id: 0 }
+      ).sort({ createdOn: -1 });
+
+      console.log(`Found ${properties.length} properties matching query: ${query}`);
+
+      return {
+        success: true,
+        data: properties.map(p => ({
+          title: p.data.title,
+          area: p.data.area,
+          nearby: p.data.nearby
+        }))
+      };
+    } catch (error) {
+      console.error('Error searching properties:', error);
+      throw new Error(error.message || "Failed to search properties");
+    }
+  }
 
 
