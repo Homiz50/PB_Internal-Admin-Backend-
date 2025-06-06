@@ -38,6 +38,8 @@ const propertySchema = new mongoose.Schema({
             description: String,
             userType: String,
             unitType: String,
+            unitNo:String,
+            floorNo:String,
             propertyCurrentStatus: String,
             description1: String,
             key: String,
